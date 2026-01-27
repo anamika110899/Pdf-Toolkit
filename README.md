@@ -42,7 +42,3 @@ The project focuses on performance, security, and responsiveness, making it suit
 - PDF Processing Libraries
 - Tesseract OCR
 
----
-
-## 📂 Project Structure
-
