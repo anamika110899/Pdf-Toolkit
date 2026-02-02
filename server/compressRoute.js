@@ -9,20 +9,21 @@ router.post("/compress", upload.single("pdf"), (req, res) => {
   const inputPath = `"${req.file.path}"`;
   const outputPath = `"uploads/compressed-${Date.now()}.pdf"`;
 
-  const gsPath = `"C:\\Program Files\\gs\\gs10.06.0\\bin\\gswin64c.exe"`;
+  // ✅ Use generic Ghostscript command (Linux + Windows)
+  const gsCommand = "gs";
 
-  const command = `${gsPath} -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=${outputPath} ${inputPath}`;
+  const command = `${gsCommand} -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=${outputPath} ${inputPath}`;
 
   exec(command, async (error) => {
     if (error) {
-      console.log(error);
+      console.error("Ghostscript error:", error);
       return res.status(500).json({ message: "Compression failed" });
     }
 
     await History.create({
       userId: "guest",
       tool: "Compress PDF",
-      fileName: req.file.originalname
+      fileName: req.file.originalname,
     });
 
     res.download(outputPath.replace(/"/g, ""));
