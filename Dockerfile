@@ -1,20 +1,24 @@
-FROM node:24-bullseye
+FROM node:18-bullseye
 
+# System dependencies
 RUN apt-get update && apt-get install -y \
-    ghostscript \
-    poppler-utils \
-    tesseract-ocr \
-    && rm -rf /var/lib/apt/lists/*
+  libreoffice \
+  ghostscript \
+  tesseract-ocr \
+  tesseract-ocr-eng \
+  poppler-utils \
+  fonts-dejavu \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-COPY server/package*.json ./server/
-WORKDIR /app/server
+COPY package*.json ./
 RUN npm install
 
-WORKDIR /app
 COPY . .
 
-EXPOSE 5000
+ENV NODE_ENV=production
 
-CMD ["node", "server/index.js"]
+EXPOSE 10000
+
+CMD ["node", "server.js"]

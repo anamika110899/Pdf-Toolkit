@@ -1,3 +1,52 @@
+ require("./db");
+ const express = require("express");
+ const cors = require("cors");
+
+ const uploadRoute = require("./uploadRoute");
+ const mergeRoute = require("./mergeRoute");
+ const splitRoute = require("./splitRoute");
+ const compressRoute = require("./compressRoute");
+ const authRoute = require("./routes/authRoute");
+ const pdfToWordRoute = require("./pdfToWordRoute");
+ const wordToPdfRoute = require("./wordToPdfRoute");
+ const pdfToJpgRoute = require("./pdfToJpgRoute");
+ const historyRoute = require("./historyRoute");
+ const editRoute = require("./editRoute");
+ const protectPdfRoute = require("./protectPdfRoute");
+ const signPdfRoute = require("./signPdfRoute");
+ const ocrRoute = require("./ocrRoute");
+
+ const app = express();
+
+ app.use(cors());
+ app.use(express.json());
+ app.use(express.urlencoded({ extended: true }));
+
+ app.get("/", (req, res) => {
+   res.send("PDF Toolkit API Running...");
+ });
+
+ app.use("/api", uploadRoute);
+ app.use("/api", mergeRoute);
+ app.use("/api", splitRoute);
+ app.use("/api", compressRoute);
+ app.use("/api", authRoute);
+ app.use("/api", pdfToWordRoute);
+ app.use("/api", wordToPdfRoute);
+ app.use("/api", pdfToJpgRoute);
+ app.use("/api", historyRoute);
+ app.use("/api", editRoute);
+ app.use("/api", protectPdfRoute);
+ app.use("/api", signPdfRoute);
+ app.use("/api", ocrRoute);
+
+ const PORT = process.env.PORT || 5000;
+
+ app.listen(PORT, "0.0.0.0", () => {
+   console.log(`Server running on port ${PORT}`);
+ });
+
+
 // require("./db");
 // const express = require("express");
 // const cors = require("cors");
@@ -7,10 +56,12 @@
 // const splitRoute = require("./splitRoute");
 // const compressRoute = require("./compressRoute");
 // const authRoute = require("./routes/authRoute");
+// const historyRoute = require("./historyRoute");
+
+// ❌ Linux unsupported / high-risk (temporarily disabled)
 // const pdfToWordRoute = require("./pdfToWordRoute");
 // const wordToPdfRoute = require("./wordToPdfRoute");
 // const pdfToJpgRoute = require("./pdfToJpgRoute");
-// const historyRoute = require("./historyRoute");
 // const editRoute = require("./editRoute");
 // const protectPdfRoute = require("./protectPdfRoute");
 // const signPdfRoute = require("./signPdfRoute");
@@ -23,69 +74,19 @@
 // app.use(express.urlencoded({ extended: true }));
 
 // app.get("/", (req, res) => {
-//   res.send("PDF Toolkit API Running...");
+//   res.send("PDF Toolkit API Running on Render 🚀");
 // });
 
+// ✅ SAFE ROUTES
 // app.use("/api", uploadRoute);
 // app.use("/api", mergeRoute);
 // app.use("/api", splitRoute);
 // app.use("/api", compressRoute);
 // app.use("/api", authRoute);
-// app.use("/api", pdfToWordRoute);
-// app.use("/api", wordToPdfRoute);
-// app.use("/api", pdfToJpgRoute);
 // app.use("/api", historyRoute);
-// app.use("/api", editRoute);
-// app.use("/api", protectPdfRoute);
-// app.use("/api", signPdfRoute);
-// app.use("/api", ocrRoute);
 
 // const PORT = process.env.PORT || 5000;
 
 // app.listen(PORT, "0.0.0.0", () => {
 //   console.log(`Server running on port ${PORT}`);
 // });
-
-require("./db");
-const express = require("express");
-const cors = require("cors");
-
-const uploadRoute = require("./uploadRoute");
-const mergeRoute = require("./mergeRoute");
-const splitRoute = require("./splitRoute");
-const compressRoute = require("./compressRoute");
-const authRoute = require("./routes/authRoute");
-const historyRoute = require("./historyRoute");
-
-// ❌ Linux unsupported / high-risk (temporarily disabled)
-// const pdfToWordRoute = require("./pdfToWordRoute");
-// const wordToPdfRoute = require("./wordToPdfRoute");
-// const pdfToJpgRoute = require("./pdfToJpgRoute");
-// const editRoute = require("./editRoute");
-// const protectPdfRoute = require("./protectPdfRoute");
-// const signPdfRoute = require("./signPdfRoute");
-// const ocrRoute = require("./ocrRoute");
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.send("PDF Toolkit API Running on Render 🚀");
-});
-
-// ✅ SAFE ROUTES
-app.use("/api", uploadRoute);
-app.use("/api", mergeRoute);
-app.use("/api", splitRoute);
-app.use("/api", compressRoute);
-app.use("/api", authRoute);
-app.use("/api", historyRoute);
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
-});
