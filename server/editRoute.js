@@ -2,7 +2,6 @@ const express = require("express");
 const multer = require("multer");
 const { PDFDocument, rgb } = require("pdf-lib");
 const fs = require("fs");
-
 const upload = multer({ dest: "uploads/" });
 const router = express.Router();
 
@@ -24,7 +23,6 @@ router.post("/edit-pdf-advanced", upload.single("pdf"), async (req, res) => {
         });
       }
     });
-
     const finalPdf = await pdfDoc.save();
     res.setHeader("Content-Type", "application/pdf");
     res.send(Buffer.from(finalPdf));
@@ -33,5 +31,4 @@ router.post("/edit-pdf-advanced", upload.single("pdf"), async (req, res) => {
     res.status(500).json({ message: "Edit failed" });
   }
 });
-
 module.exports = router;
