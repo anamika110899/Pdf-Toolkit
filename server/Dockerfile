@@ -1,4 +1,4 @@
-FROM node:18-bullseye
+FROM node:20-bullseye
 
 # System dependencies for PDF tools
 RUN apt-get update && apt-get install -y \
@@ -17,6 +17,7 @@ COPY package*.json ./
 
 # Install node dependencies
 RUN npm install
+# (agar package-lock.json hai to npm ci bhi use kar sakte ho)
 
 # Copy rest of backend code
 COPY . .
